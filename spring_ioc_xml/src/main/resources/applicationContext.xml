@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="studentOne" class="spring_ioc.pojo.Student">
+    </bean>
+    <bean id="studentTwo" class="spring_ioc.pojo.Student">
+        <property name="sid" value="1"/>
+        <property name="age" value="23"/>
+        <property name="gender" value="男"/>
+        <property name="sname" value="麦"/>
+     </bean>
+    <bean id="studentThree" class="spring_ioc.pojo.Student">
+        <property name="sid" value="1001"/>
+        <property name="sname" value="李"/>
+        <property name="age" value="25"/>
+        <property name="gender" value="男"/>
+        <!-- ref属性：引用IOC容器中某个bean的id，将所对应的bean为属性赋值 -->
+<!--        <property name="clazz" ref="clazzOne"/>-->
+        <property name="clazz">
+            <bean id="clazzInner" class="spring_ioc.pojo.Clazz">
+                <property name="cname" value="信工"/>
+                <property name="cid" value="203"/>
+            </bean>
+        </property>
+        <property name="hobbies">
+            <array>
+                <value>学习</value>
+                <value>跑步</value>
+                <value>玩游戏</value>
+            </array>
+        </property>
+        <property name="teacherMap">
+            <map>
+                <entry key="001" value-ref="teacherOne"/>
+                <entry key="002" value-ref="teacherTwo"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="clazzOne" class="spring_ioc.pojo.Clazz">
+        <property name="cid" value="001"/>
+        <property name="cname" value="信管"/>
+        <property name="students" ref="studentList"/>
+<!--        <property name="students">-->
+<!--            <list>-->
+<!--                <ref bean="studentOne"/>-->
+<!--                <ref bean="studentTwo"/>-->
+<!--                <ref bean="studentThree"/>-->
+<!--            </list>-->
+<!--        </property>-->
+    </bean>
+    <util:list id="studentList">
+        <ref bean="studentOne"/>
+        <ref bean="studentTwo"/>
+        <ref bean="studentThree"/>
+    </util:list>
+    <bean id="teacherOne" class="spring_ioc.pojo.Teacher">
+        <property name="tid" value="001"/>
+        <property name="tname" value="张"/>
+    </bean>
+    <bean id="teacherTwo" class="spring_ioc.pojo.Teacher">
+        <property name="tid" value="002"/>
+        <property name="tname" value="王"/>
+    </bean>
+</beans>
